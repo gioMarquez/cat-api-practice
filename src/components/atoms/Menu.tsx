@@ -1,13 +1,14 @@
 import CloseIcon from "@mui/icons-material/Close";
 import { AnimatePresence, motion } from "framer-motion";
-import { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { OptionMenu } from "../../interfaces/OptionsMenu";
 
 interface MenuProps {
     options: OptionMenu[];
+    setOption: React.Dispatch<React.SetStateAction<number>>
 }
 
-const Menu = ({ options }: MenuProps) => {
+const Menu = ({ options, setOption }: MenuProps) => {
     const [isOpen, setIsOpen] = useState(false);
     const menuRef = useRef<HTMLDivElement>(null);
 
@@ -36,6 +37,10 @@ const Menu = ({ options }: MenuProps) => {
                     <div
                         key={option.id}
                         className="bg-white border-2 rounded-xl px-4 py-2"
+                        onClick={() => {
+                            setOption(option.id);
+                            setIsOpen(false);
+                        }}
                     >
                         {option.label}
                     </div>
@@ -78,7 +83,8 @@ const Menu = ({ options }: MenuProps) => {
                                     className="bg-secondary text-white font-semibold border-2 rounded-[2rem] h-[8vh] my-[2vh] flex items-center justify-start px-4 w-full"
                                     onClick={() => {
                                         setIsOpen(false);
-                                        // handleOptionClick(option.id);
+                                        setOption(option.id);
+                                        setIsOpen(false);
                                     }}
                                 >
                                     {option.icon && <span className="mr-4">{option.icon}</span>}
