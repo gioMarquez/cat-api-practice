@@ -4,6 +4,9 @@ import axios from "axios";
 import { CustomSelect, ImagesGrid, Loader } from "../atoms";
 import { Button } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
+import toast from "react-hot-toast";
 
 const Gallery = () => {
     const [numberImages, setNumberImages] = useState(4);
@@ -33,6 +36,7 @@ const Gallery = () => {
             setBreeds(response.data);
         } catch (error) {
             console.error("Error", error);
+            toast.error("Error al cargar las razas de gatos. Por favor, inténtalo de nuevo.");
         } finally {
             setIsLoading(false);
         }
@@ -50,6 +54,7 @@ const Gallery = () => {
                 }
             );
             setImages(response.data.map((image: { url: string }) => image.url));
+            toast.success("¡Imágenes obtenidas!");
         } catch (error) {
             console.error("Error", error);
         } finally {
@@ -75,7 +80,6 @@ const Gallery = () => {
             window.removeEventListener("resize", handleResize);
         };
     }, []);
-
 
     useEffect(() => { //cerrar el modal al presionar "Escape"
         const handleKeyDown = (e: KeyboardEvent) => {
@@ -128,8 +132,6 @@ const Gallery = () => {
                             </>
                         )}
 
-
-
                         {limit < images.length ? (
                             <div className="flex justify-center items-center pb-3">
                                 <Button
@@ -181,11 +183,53 @@ const Gallery = () => {
                                     alt="Preview"
                                     className="w-full h-auto max-h-[80vh] object-contain rounded-md shadow-xl"
                                 />
+
+                                {/* Botones de navegación con íconos */}
+                                <div className="absolute bottom-2 left-1/2 transform -translate-x-1/2 flex gap-6">
+                                    <Button
+                                        variant="contained"
+                                        onClick={() => {
+                                            const currentIndex = images.indexOf(previewImage);
+                                            if (currentIndex > 0) {
+                                                setPreviewImage(images[currentIndex - 1]);
+                                            }
+                                        }}
+                                        disabled={images.indexOf(previewImage) === 0}
+                                        sx={{
+                                            backgroundColor: "black",
+                                            opacity: 0.6,
+                                            color: "#FFFFFF",
+                                            padding: "10px",
+                                            borderRadius: "50%",
+                                            "&:hover": { opacity: 0.8 },
+                                        }}
+                                    >
+                                        <ArrowBackIcon />
+                                    </Button>
+                                    <Button
+                                        variant="contained"
+                                        onClick={() => {
+                                            const currentIndex = images.indexOf(previewImage);
+                                            if (currentIndex < images.length - 1) {
+                                                setPreviewImage(images[currentIndex + 1]);
+                                            }
+                                        }}
+                                        disabled={images.indexOf(previewImage) === images.length - 1}
+                                        sx={{
+                                            backgroundColor: "black",
+                                            opacity: 0.6,
+                                            color: "#FFFFFF",
+                                            padding: "10px",
+                                            borderRadius: "50%",
+                                            "&:hover": { opacity: 0.8 },
+                                        }}
+                                    >
+                                        <ArrowForwardIcon />
+                                    </Button>
+                                </div>
                             </div>
                         </div>
                     )}
-
-
                 </div>
             ) : (
                 "No hay razas disponibles"

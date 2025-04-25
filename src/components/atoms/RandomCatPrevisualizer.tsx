@@ -2,6 +2,7 @@ import { Button, CircularProgress } from "@mui/material";
 import axios from "axios";
 import { useState } from "react";
 import ShuffleIcon from '@mui/icons-material/Shuffle';
+import toast from "react-hot-toast";
 
 const RandomCatPrevisualizer = () => {
     const [randomCat, setRandomCat] = useState<string | null>(null);
@@ -24,9 +25,11 @@ const RandomCatPrevisualizer = () => {
             const catData = response.data[0];
             setRandomCat(catData?.url || null);
             setCatBreed(catData?.breeds?.[0]?.name || "Unknown Breed");
+            toast.success("¡Raza obtenida!");
         } catch (err) {
             console.error("Error fetching cat image:", err);
             setError("Failed to fetch a random cat image. Please try again.");
+            toast.error("Error fetching cat image. Please try again.");
         } finally {
             setLoading(false);
         }
