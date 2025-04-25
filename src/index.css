@@ -37,4 +37,8 @@
     0% { width: 4.8px }
     100% { width: 48px}
 }
+
+button {
+    touch-action: manipulation; /* Mejora la respuesta táctil */
+}
   

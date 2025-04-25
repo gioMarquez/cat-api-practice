@@ -14,7 +14,7 @@ const Menu = ({ options, setOption }: MenuProps) => {
 
     // Detectar clics fuera del menú
     useEffect(() => {
-        const handleClickOutside = (event: MouseEvent) => {
+        const handleClickOutside = (event: MouseEvent | TouchEvent) => {
             if (
                 isOpen &&
                 menuRef.current &&
@@ -23,9 +23,13 @@ const Menu = ({ options, setOption }: MenuProps) => {
                 setIsOpen(false);
             }
         };
+
         document.addEventListener("mousedown", handleClickOutside);
+        document.addEventListener("touchstart", handleClickOutside);
+
         return () => {
             document.removeEventListener("mousedown", handleClickOutside);
+            document.removeEventListener("touchstart", handleClickOutside);
         };
     }, [isOpen]);
 
@@ -51,12 +55,11 @@ const Menu = ({ options, setOption }: MenuProps) => {
             {/* Mobile Menu */}
             <div className="lg:hidden relative">
                 <button
-                    onClick={() => setIsOpen(true)}
+                    onClick={() => setIsOpen(!isOpen)}
                     className="bg-primary p-4 rounded-br-2xl w-[60px] h-[60px] flex items-center justify-center"
                 >
-                    <span className="text-white text-3xl">☰</span>
+                    <span className="text-white text-3xl"> ☰</span>
                 </button>
-
                 <AnimatePresence>
                     {isOpen && (
                         <motion.div
@@ -64,7 +67,7 @@ const Menu = ({ options, setOption }: MenuProps) => {
                             initial={{ x: "-100%", opacity: 0 }}
                             animate={{ x: 0, opacity: 1 }}
                             exit={{ x: "-100%", opacity: 0 }}
-                            transition={{ duration: 0.3, ease: "easeInOut" }}
+                            transition={{ duration: 0.3, ease: "easeInOut", delay: 0.1 }}
                             className="fixed top-0 left-0 bg-primary w-[70vw] h-[100vh] pt-[1vh] px-[5vw] z-50 rounded-r-2xl"
                         >
                             <button
