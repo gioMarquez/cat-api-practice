@@ -1,7 +1,10 @@
+import Gallery from "./components/molecules/Gallery"
 
 const App = () => {
   return (
-    <div className="bg-red-300">App</div>
+    <div>
+      <Gallery />
+    </div>
   )
 }
 
