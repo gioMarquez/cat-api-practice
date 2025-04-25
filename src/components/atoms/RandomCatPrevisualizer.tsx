@@ -51,9 +51,9 @@ const RandomCatPrevisualizer = () => {
                         <p className="text-gray-500 text-center px-2">Click "Random Cat" para cargar un imagen</p>
                     )}
                 </div>
-                {catBreed && !loading && !error && (
+                {  !error && (
                     <p className="text-lg font-medium text-gray-700 text-center">
-                        Raza: {catBreed}
+                        Raza: {!catBreed ? "---" : catBreed}
                     </p>
                 )}
                 <Button

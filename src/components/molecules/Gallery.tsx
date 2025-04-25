@@ -98,10 +98,10 @@ const Gallery = () => {
             {isLoading ? <Loader /> : null}
             {breeds.length ? (
                 <div className="pt-1">
-                    <h1 className="text-2xl font-[600] text-center -translate-y-10">Galería de gatos</h1>
+                    <h1 className="text-4xl font-[600] text-center -translate-y-10 md:translate-y-0 md:my-5">Galería de gatos</h1>
                     <CustomSelect
                         label="Seleccionar raza"
-                        className="w-[90%] mx-auto mb-3"
+                        className="w-[90%] mx-auto mb-3 md:w-[20vw]"
                         onChange={(value) => setSelectedBreed(value.toString())}
                         options={breeds.map((breed) => ({
                             label: breed.name,
@@ -110,10 +110,25 @@ const Gallery = () => {
                     />
 
                     <>
-                        <ImagesGrid
-                            images={images.slice(0, limit)}
-                            onImageClick={(imgUrl: string) => setPreviewImage(imgUrl)}
-                        />
+                        {selectedBreed ? (
+                            <ImagesGrid
+                                images={images.slice(0, limit)}
+                                onImageClick={(imgUrl: string) => setPreviewImage(imgUrl)}
+                            />
+                        ) : (
+                            <>
+                                <div className={`grid ${window.innerWidth < 768 ? '' : 'grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4'} gap-4 p-4`}>
+                                    {Array.from({ length: window.innerWidth < 768 ? 2 : 8 }).map((_, i) => (
+                                        <div
+                                            key={i}
+                                            className="h-60 w-full bg-gray-300 rounded-lg shadow-md animate-pulse"
+                                        />
+                                    ))}
+                                </div>
+                            </>
+                        )}
+
+
 
                         {limit < images.length ? (
                             <div className="flex justify-center items-center pb-3">

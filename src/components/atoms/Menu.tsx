@@ -32,18 +32,19 @@ const Menu = ({ options, setOption }: MenuProps) => {
     return (
         <div className="z-50">
             {/* Desktop Menu */}
-            <div className="hidden lg:flex bg-primary w-full h-[10vh] items-center justify-around">
+            <div className="hidden lg:flex bg-primary w-full h-[10vh] items-center justify-center space-x-8">
                 {options.map((option) => (
-                    <div
+                    <button
                         key={option.id}
-                        className="bg-white border-2 rounded-xl px-4 py-2"
+                        className="bg-secondary text-white font-semibold border-2 rounded-xl px-6 py-3 transition-transform transform hover:scale-105 hover:bg-secondary-dark focus:outline-none focus:ring-2 focus:ring-secondary-light"
                         onClick={() => {
                             setOption(option.id);
                             setIsOpen(false);
                         }}
                     >
+                        {option.icon && <span className="mr-2">{option.icon}</span>}
                         {option.label}
-                    </div>
+                    </button>
                 ))}
             </div>
 
