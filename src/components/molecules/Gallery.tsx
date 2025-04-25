@@ -7,15 +7,24 @@ import { Button } from "@mui/material"
 
 const Gallery = () => {
 
-    const showNumber = 4
+    const [numberImages, setNumberImages] = useState(4)
     const [isLoading, setIsLoading] = useState(true)
     const [breeds, setBreeds] = useState<Breeds[]>([])
     const [selectedBreed, setSelectedBreed] = useState<string | undefined>(undefined)
     const [images, setImages] = useState<string[]>([])
-    const [limit, setLimit] = useState(showNumber)
+    const [limit, setLimit] = useState(numberImages)
+
+    const handleResize = () => {
+        if (window.innerWidth < 768) {
+            //isMobile
+            setNumberImages(4)
+        } else {
+            setNumberImages(8)
+        }
+    }
 
     const addMoreImages = () => {
-        setLimit((prevLimit) => prevLimit + showNumber)
+        setLimit((prevLimit) => prevLimit + numberImages)
     }
 
     const getBreeds = async () => {
@@ -29,6 +38,7 @@ const Gallery = () => {
             setIsLoading(false)
         }
     }
+
 
 
     const getImagesPerBreed = async (breedId: string) => {
@@ -54,12 +64,21 @@ const Gallery = () => {
     useEffect(() => {
         if (selectedBreed) {
             getImagesPerBreed(selectedBreed)
-            setLimit(showNumber)
+            setLimit(numberImages)
         }
     }, [selectedBreed])
 
+    useEffect(() => {
+        handleResize()
+        window.addEventListener("resize", handleResize)
+        return () => {
+            window.removeEventListener("resize", handleResize)
+        }
+    }, [])
 
-    console.log("images.slice(0, limit)", images.slice(0, limit))
+
+
+
 
 
 
