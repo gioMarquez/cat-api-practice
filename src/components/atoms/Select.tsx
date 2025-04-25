@@ -35,18 +35,42 @@ const CustomSelect = ({ label, options, onChange, className }: CustomSelectProps
         <div className={className}>
             <Box sx={{ minWidth: 120 }}>
                 <FormControl fullWidth>
-                    <InputLabel id="demo-simple-select-label">{label}</InputLabel>
+                    <InputLabel id="demo-simple-select-label" sx={{
+                        fontSize: "1.5rem", // Aumenta el tamaño del label
+                        textAlign: "center"
+                    }}>{label}</InputLabel>
                     <Select
                         labelId="demo-simple-select-label"
                         id="demo-simple-select"
                         value={value}
-                        label={label}
+                        label={"--"+label+ "---"}
                         onChange={handleChange}
+                        sx={{
+                            fontSize: "1.2rem",
+                            fontWeight: "500",
+                            color: "#000000",
+                            backgroundColor: "#FFFFFF",
+                            borderRadius: "10px",
+                            textAlign: "center",
+                            '& .MuiSelect-select': {
+                                textAlign: "center",
+                            },
+                        }}
                     >
                         {options.map((option: SelectOptions) => (
-                            <MenuItem value={option.value}>{option.label}</MenuItem>
+                            <MenuItem
+                                value={option.value}
+                                sx={{
+                                    display: "flex",
+                                    justifyContent: "center",
+                                    textAlign: "center"
+                                }}
+                            >
+                                {option.label}
+                            </MenuItem>
                         ))}
                     </Select>
+
                 </FormControl>
             </Box>
         </div>

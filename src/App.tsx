@@ -1,10 +1,8 @@
-import Gallery from "./components/molecules/Gallery"
+import TemplateCat from "./components/template/TemplateCat"
 
 const App = () => {
   return (
-    <div>
-      <Gallery />
-    </div>
+    <TemplateCat />
   )
 }
 
