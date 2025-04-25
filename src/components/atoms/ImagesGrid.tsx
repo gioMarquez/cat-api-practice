@@ -1,8 +1,9 @@
 interface GalleryProps {
     images: string[];
+    onImageClick: (url: string) => void;
 }
 
-const ImagesGrid = ({ images }: GalleryProps) => {
+const ImagesGrid = ({ images, onImageClick }: GalleryProps) => {
     const imagesTotal = images.length;
 
     if (!images || imagesTotal === 0) {
@@ -21,6 +22,7 @@ const ImagesGrid = ({ images }: GalleryProps) => {
                             src={url}
                             alt={`Cat ${idx + 1}`}
                             className="w-full h-60 object-cover hover:scale-105 transition-transform duration-300"
+                            onClick={() => onImageClick(url)}
                         />
                     </div>
                 ))}
@@ -35,7 +37,7 @@ export default ImagesGrid;
 const ImagesCounter = ({ length }: { length: number }) => {
 
     return (
-        <div className="fixed bottom-4 right-4 bg-blue-500/30 p-2 rounded-lg shadow-md border border-gray-300 ">
+        <div className="fixed bottom-4 right-4 bg-primary/30 p-2 rounded-lg shadow-md border border-gray-300 ">
             Loaded: {length}
         </div>
     )
