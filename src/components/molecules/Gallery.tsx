@@ -15,7 +15,7 @@ const Gallery = () => {
     const [selectedBreed, setSelectedBreed] = useState<string | undefined>(undefined);
     const [images, setImages] = useState<string[]>([]);
     const [limit, setLimit] = useState(numberImages);
-    const [previewImage, setPreviewImage] = useState<string | null>(null); // 👈 estado para el modal
+    const [previewImage, setPreviewImage] = useState<string | null>(null); 
 
     const handleResize = () => {
         if (window.innerWidth < 768) {
